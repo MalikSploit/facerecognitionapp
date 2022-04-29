@@ -1,2 +1,2 @@
-# facerecognitionapp
-This app draws a rectangle around faces on jpg image
+# Face Recognition App
+Link to the Website : https://maliksploit.github.io/facerecognitionapp/
