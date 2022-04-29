@@ -110,8 +110,9 @@ class App extends Component
     }).then(response => response.json()).then(response => 
     {
     console.log('hi', response)
-    if (response)
+    if (response && this.imageUrl.length > 0)
     {
+      console.log(this.imageUrl.length);
       fetch('https://malik-server.herokuapp.com/image', {
       method: 'put',
       headers: {'Content-Type': 'application/json'},
