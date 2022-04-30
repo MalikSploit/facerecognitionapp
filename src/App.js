@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Particles from 'react-particles-js';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Navigation from './components/Navigation/Navigation';
@@ -7,7 +7,15 @@ import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
+import validator from "validator/es";
+
 import './App.css';
+
+const validate = (value) =>
+{
+
+  return !!validator.isURL(value);
+}
 
 const particlesOptions =
 {
@@ -103,7 +111,7 @@ class App extends Component
   onButtonSubmit = () =>
   {
     this.setState({imageUrl: this.state.input});
-    if (this.state.input.length > 0)
+    if (validate(this.state.input))
     {
       fetch('https://malik-server.herokuapp.com/imageurl', {
         method: 'post',
@@ -111,7 +119,7 @@ class App extends Component
         body: JSON.stringify({input: this.state.input})
       }).then(response => response.json()).then(response =>
       {
-        console.log('hi', response)
+        // console.log('hi', response)
         if (response)
         {
           fetch('https://malik-server.herokuapp.com/image', {
