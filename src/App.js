@@ -103,27 +103,29 @@ class App extends Component
   onButtonSubmit = () =>
   {
     this.setState({imageUrl: this.state.input});
-    fetch('https://malik-server.herokuapp.com/imageurl', {
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({input: this.state.input})
-    }).then(response => response.json()).then(response => 
+    if (this.state.input.length > 0)
     {
-    console.log('hi', response)
-    if (response && this.imageUrl.length > 0)
-    {
-      console.log(this.imageUrl.length);
-      fetch('https://malik-server.herokuapp.com/image', {
-      method: 'put',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({id: this.state.user.id})
-      }).then(response => response.json()).then(count =>
+      fetch('https://malik-server.herokuapp.com/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({input: this.state.input})
+      }).then(response => response.json()).then(response =>
       {
-        this.setState(Object.assign(this.state.user, {entries: count}))
-      }).catch(console.log);
-      }
+        console.log('hi', response)
+        if (response)
+        {
+          fetch('https://malik-server.herokuapp.com/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id: this.state.user.id})
+          }).then(response => response.json()).then(count =>
+          {
+            this.setState(Object.assign(this.state.user, {entries: count}))
+          }).catch(console.log);
+        }
         this.displayFaceBox(this.calculateFaceLocation(response))
       }).catch(err => console.log(err));
+    }
   }
 
   onRouteChange = (route) =>
